@@ -1,4 +1,4 @@
-const seatsData = [
+let seatsList = [
   { SoGhe: 1, TenGhe: "số 1 ", Gia: 100, TrangThai: false },
   { SoGhe: 2, TenGhe: "số 2 ", Gia: 100, TrangThai: false },
   { SoGhe: 3, TenGhe: "số 3 ", Gia: 100, TrangThai: false },
@@ -36,11 +36,19 @@ const seatsData = [
   { SoGhe: 35, TenGhe: "số 35 ", Gia: 100, TrangThai: false },
 ];
 
-/* Khởi tạo giá trị ban đầu */
-let initialState = {
-  seatsData,
-};
+let initialState = seatsList;
 
-export const seatsDataReducer = (state = initialState, action) => {
-  return { ...state };
-};
+export default function seatsReducer(state = initialState, {type, payload}) {
+  switch (type) {
+
+    case 'ADD_SEAT':
+      const index = seatsList.findIndex(seat => seat.SoGhe === payload.seat.SoGhe);
+      const clone = [...state];
+      clone[index].TrangThai = !payload.seat.TrangThai;
+      state.seatsList = clone;
+      // console.log("state", state.seatsList); //clg
+      return [...state];
+    default:
+      return state;
+  }
+} 
